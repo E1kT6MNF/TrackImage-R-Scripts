@@ -23,6 +23,7 @@ source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImag
 #
 #     Read TrackImage .csv files, put in "dat2"
 dat2 <- CombineFS()
+#     pass stacked data to metrics function
 dat3 <- StabMetrics(dat2)
 #
 #     End
