@@ -4,10 +4,9 @@
 library(xlsx)
 #
 # USER INPUT: LIST TIMES TO WRITE(SEPARATED BY COMMAS)
-time_list = c(100, 142.5)
+time_list = c(seq(from = 10,to = 100,by = 10), 142.5)
 #
-#
-inds <- which(times %in% time_list)
+
 #     Choose TrackReport File
 fileName <- choose.files(default = "*.csv",caption = "Select TrackReport file")
 # read file extract field separator and find rows where x,y,z
@@ -38,8 +37,8 @@ outPath <- paste0(dirname(fileName),"/",sub(".csv","",basename(fileName))," Outp
 if(!dir.exists(outPath)){dir.create(outPath, showWarnings = TRUE, recursive = FALSE, mode = "0777")}     
 #  change working directory to out path
 setwd(outPath)
-time_list <- c(which(times==100), which(times==142.5))
-
+# create vector of time elements for For loop
+inds <- which(times %in% time_list)
 #     step through time intervals
 for(i in inds){
       # make dataframe for write-out
