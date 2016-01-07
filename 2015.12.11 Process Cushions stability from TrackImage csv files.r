@@ -1,9 +1,12 @@
 #  This script will read TrackImage .csv files and output cushion stabiliy metrics
+#  Author: John Newkirk
 #  Rev. History:
    #     08/11/15 added arguments for offset, Slope Lower Time Limit, Slope Upper Time Limit
    #     09/01/15 1. Moved arguement entry to line items instead of within function call
    #              2. changed output form of results table from clipboard to .csv file
    #              3. added a header section to results table listing file source and parameters used.
+   #     12/03/15 added arguement for L/R camera side view.
+   #     12/11/15 added arguements for in-position line (was -190) and edge line (was 700)         
 #  Requirements:
     #     1.    Be sure there are front and side .csv files for all test with no extras. Remove any
     #           other .csv files from the directory
@@ -23,7 +26,7 @@
 
 #  load function scripts
 source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\2015.09.02 combine front and side TI files.r")
-source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\2015.09.04 Cushion stability metrics.r")
+source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\2015.12.03 Cushion stability metrics.r")
 #
 # Read TrackImage .csv files, put in "dat2"
 
@@ -35,14 +38,17 @@ res <- CombineFS()
 #  dat2 = dataframe containing stacked TI data (should alway = dat2)
 #  User provided arguements
 offset<- 105  # offset = distance from origin to center of cushion (used for FCA spec., typ. 100-110)
-LTL   <- 20   # LTL= lower time limit for stability evaluation (For Toyota = 20)
-UTL   <- 75   # UTL = upper time limits for stability evaluation (For Toyota = 75)
-ST1   <- 11   # ST1 is min time for slope calculation (need to graph data and make judgement)
-ST2   <- 19.5 # ST2 is max time for slope calculation (need to graph data and make judgement)
+LTL <- 20   # LTL= lower time limit for stability evaluation (For Toyota = 20)
+UTL <- 75   # UTL = upper time limits for stability evaluation (For Toyota = 75)
+ST1 <- 11   # ST1 is min time for slope calculation (need to graph data and make judgement)
+ST2 <- 19.5 # ST2 is max time for slope calculation (need to graph data and make judgement)
+Edge_side <- "L" # Side cushion leading edge(depends on camera position). 
+            # OptionS are "L" and "R". MUST BE IN QUOTES
 #
 #  Run metrics function
-dat3 <- StabMetrics(dat2=res$data,offset=offset, LTL=LTL, UTL=UTL,ST1=ST1,ST2=ST2,Src=res$Source,Qty=res$Quantity)
+dat3 <- StabMetrics(dat2=res$data,offset=offset, LTL=LTL, UTL=UTL,ST1=ST1,ST2=ST2,
+                    Src=res$Source,Qty=res$Quantity, Edge_side=Edge_side)
 #
 #  optional to write data table  to clipboard:
 #  Select rest of line and hit "Run" button -> write.table(dat3, file='clipboard', sep='\t',row.names=FALSE)
-#  End
+#  End script

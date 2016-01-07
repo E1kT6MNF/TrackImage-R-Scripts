@@ -1,19 +1,27 @@
 readTI_AB <- function(fileName){
 #  This function reads and formats data from TrackImage Aibag files returns a cleaned dataframe
 #  THIS WORKS WITH TRACKiMAGE VERSION: 3.1.2
+#  Revision History:
+#     1/7/2016 added detection of field separator rather than hard-coding ";"
 #  Author: John Newkirk      
-# Find header length (rows)
-header <- readLines(fileName,n=200)
-infoRows <- grep("HEADER|CHANNELS",header) 
+# 
+# read header, find end of header, find field separator
+header <- readLines(fileName,n=-1)
+infoRows <- grep("HEADER|CHANNELS",header)
+sep_field <- header[grep("SEPARATOR:",header)]
+sep = substr(sep_field,nchar(sep_field),nchar(sep_field))
+rm(header)
 #
 #  Extact file names from TrackImage file
-header_names <-  read.delim(fileName, sep = ";", skip = infoRows[2] , nrows = 1,header = F,stringsAsFactors =F)
+header_names <-  read.delim(fileName, sep = sep, skip = infoRows[2] , nrows = 1,header = F,
+                            stringsAsFactors =F)
 #  drop extra column from trailing semi-colon
 header_names <- header_names[1:ncol(header_names)-1]
 #  Rename 1st time column
 header_names[1] <- "Time"
 #  Extact column units from TrackImage file
-units <-  read.delim(fileName, sep = ";", skip = infoRows[2]+1 , nrows = 1,header = F,stringsAsFactors =F)
+units <-  read.delim(fileName, sep = sep, skip = infoRows[2]+1 , nrows = 1,header = F,
+                     stringsAsFactors =F)
 #  drop extra column from trailing semi-colon
 units <- units[1:ncol(units)-1]
 #  identify columns without ".x" 
@@ -27,7 +35,7 @@ keepers[1] <- TRUE
 #  combine logical vectors of keepers and not .x
 keepers2 <- keepers == TRUE & not_dotx == TRUE
 #  Read data
-dat2 <- read.delim(fileName, sep = ";", skip = infoRows[2]+2, header = F)
+dat2 <- read.delim(fileName, sep = sep, skip = infoRows[2]+2, header = F)
 #  drop extra column from trailing semi-colon
 dat2 <- dat2[1:ncol(dat2)-1]
 #  subset dataframe to "keepers"
