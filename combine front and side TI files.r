@@ -7,7 +7,7 @@ CombineFS <- function(){
    #           results dataframe.
 library(tidyr)
 #  read function for reading and cleaning TrackImage .csv files
-source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\ReadTI_Traj_2D_v 3.1.2.R")
+source("S:\\OTCCommon\\Programming Tools\\Newkirk GitHub\\TrackImage-R-Scripts\\ReadTI_Traj_2D.R")
 basePath <- getwd()
 #  Set directory where TrackImage files are located.  
 TI_dir <- choose.dir(default = basePath, caption = "Select folder containing TrackImage .csv files")

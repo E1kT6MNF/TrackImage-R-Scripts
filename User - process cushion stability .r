@@ -25,8 +25,8 @@
 #   4. The stability results will be written to a .csv file in the "Output" folder
 
 #  load function scripts
-source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\2015.09.02 combine front and side TI files.r")
-source("S:\\OTCCommon\\AD_Reliability\\RAT\\Projects\\John\\R Scripts\\TrackImage Scripts\\2015.12.03 Cushion stability metrics.r")
+source("S:\\OTCCommon\\Programming Tools\\Newkirk GitHub\\TrackImage-R-Scripts\\combine front and side TI files.r")
+source("S:\\OTCCommon\\Programming Tools\\Newkirk GitHub\\TrackImage-R-Scripts\\Cushion stability metrics.r")
 #
 # Read TrackImage .csv files, put in "dat2"
 
